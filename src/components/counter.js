@@ -1,22 +1,28 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as actions from "../actionTypes";
+import { incrementCount, decrementCount } from "../actions";
 
 const Counter = () => {
   const count = useSelector((state) => state.count);
   const dispatch = useDispatch();
 
   const updateCount = (e) => {
-    dispatch({ type: e.target.value });
+    if (e.target.value === actions.INCREMENT_COUNT) {
+      dispatch(incrementCount());
+    } else {
+      dispatch(decrementCount());
+    }
   };
 
   return (
     <div>
       <h3>React redux</h3>
       <div>Count: {count}</div>
-      <button value={"INCREMENT_COUNT"} onClick={updateCount}>
+      <button value={actions.INCREMENT_COUNT} onClick={updateCount}>
         GO UP
       </button>
-      <button value={"DECREMENT_COUNT"} onClick={updateCount}>
+      <button value={actions.DECREMENT_COUNT} onClick={updateCount}>
         GO DOWN
       </button>
     </div>
