@@ -1,15 +1,15 @@
 import * as actions from "./actionTypes";
 
-export const incrementCount = () => {
+export const incrementCount = (value) => {
   return {
     type: actions.INCREMENT_COUNT,
-    payload: null,
+    payload: value,
   };
 };
 
-export const decrementCount = () => {
+export const decrementCount = (value) => {
   return {
     type: actions.DECREMENT_COUNT,
-    payload: null,
+    payload: value,
   };
 };
