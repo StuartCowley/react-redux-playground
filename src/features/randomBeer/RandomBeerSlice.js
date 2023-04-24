@@ -21,17 +21,15 @@ const randomBeerSlice = createSlice({
   },
 });
 
-export function fetchNewBeer() {
-  return async function (dispatch, getState) {
-    try {
-      axios.get("https://api.punkapi.com/v2/beers/random").then((res) => {
-        dispatch(fetchRandomBeer(res.data[0].name));
-      });
-    } catch (err) {
-      console.log("Error: " + err);
-    }
-  };
-}
+export const fetchNewBeer = () => (dispatch) => {
+  try {
+    axios.get("https://api.punkapi.com/v2/beers/random").then((res) => {
+      dispatch(fetchRandomBeer(res.data[0].name));
+    });
+  } catch (err) {
+    console.log("Error: " + err);
+  }
+};
 
 export const { addToFavourites, fetchRandomBeer } = randomBeerSlice.actions;
 
