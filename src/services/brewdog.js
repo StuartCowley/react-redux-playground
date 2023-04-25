@@ -4,10 +4,10 @@ export const brewdogApi = createApi({
   reducerPath: "brewdogApi",
   baseQuery: fetchBaseQuery({ baseUrl: "https://api.punkapi.com/v2/beers/" }),
   endpoints: (builder) => ({
-    getRandomBeer: builder.query({
-      query: () => "random/",
+    getSelection: builder.query({
+      query: () => "",
     }),
   }),
 });
 
-export const { useGetRandomBeerQuery } = brewdogApi;
+export const { useGetSelectionQuery } = brewdogApi;
