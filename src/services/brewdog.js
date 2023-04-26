@@ -7,7 +7,10 @@ export const brewdogApi = createApi({
     getSelection: builder.query({
       query: () => "",
     }),
+    fetchRandomBeer: builder.query({
+      query: () => "random",
+    }),
   }),
 });
 
-export const { useGetSelectionQuery } = brewdogApi;
+export const { useGetSelectionQuery, useFetchRandomBeerQuery } = brewdogApi;

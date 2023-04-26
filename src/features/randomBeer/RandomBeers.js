@@ -1,20 +1,24 @@
-import React, { useState } from "react";
-import { useGetSelectionQuery } from "../../services/brewdog";
+import React from "react";
+import {
+  useGetSelectionQuery,
+  useFetchRandomBeerQuery,
+} from "../../services/brewdog";
 import "./random-beer.css";
 
 const RandomBeers = () => {
-  const [randomBeer, setRandomBeer] = useState(null);
   const { data: beers, error, isLoading } = useGetSelectionQuery();
+  const { data: randomBeerResult, refetch } = useFetchRandomBeerQuery();
 
   const handleClick = () => {
-    setRandomBeer(beers[Math.floor(Math.random() * beers.length)]);
+    refetch();
   };
 
   return (
     <div className="random-beer">
       <div className="random-beer__random">
-        {randomBeer && <h3>{randomBeer.name}</h3>}
-        <button onClick={handleClick}>Pick random beer from list</button>
+        Random Beer!
+        {randomBeerResult && <h3>{randomBeerResult[0].name}</h3>}
+        <button onClick={handleClick}>Fetch a new random beer</button>
       </div>
       <div className="random-beer__names">
         {error ? (
@@ -24,7 +28,7 @@ const RandomBeers = () => {
         ) : beers ? (
           <>
             {beers.map((beer) => {
-              return <h3>{beer.name}</h3>;
+              return <h3 key={beer.name}>{beer.name}</h3>;
             })}
           </>
         ) : null}
