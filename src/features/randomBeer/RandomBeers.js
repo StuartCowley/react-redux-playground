@@ -6,6 +6,8 @@ import "./random-beer.css";
 const RandomBeer = () => {
   const latestUrl = useSelector((state) => state.randomBeer.latestUrl);
   const fetchedUrls = useSelector((state) => state.randomBeer.fetchedUrls);
+  const isLoading = useSelector((state) => state.randomBeer.isLoading);
+  const error = useSelector((state) => state.randomBeer.error);
   const dispatch = useDispatch();
 
   const handleFetchBeer = () => {
@@ -13,14 +15,17 @@ const RandomBeer = () => {
   };
 
   const handleAddToFavourites = () => {
-    dispatch(addToFavourites(latestUrl));
+    dispatch(addToFavourites());
   };
 
   return (
     <div className="random-beer">
       <div className="random-beer__fetch-container">
         <button onClick={handleFetchBeer}>Get a random beer!</button>
-        <div className="random-beer__url">Latest URL: {latestUrl}</div>
+        <div className="random-beer__url">
+          {error && <div>Error fetching new beer :(</div>}
+          Latest URL: {isLoading ? <span>Loading...</span> : latestUrl}
+        </div>
         <span>Add this to favourites?</span>
         <button onClick={handleAddToFavourites}>Yes</button>
       </div>
