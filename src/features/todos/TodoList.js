@@ -1,8 +1,9 @@
-// add imports
+import { useGetTodosQuery } from "../../services/todos";
 import { useState } from "react";
 
 const TodoList = () => {
   const [newTodo, setNewTodo] = useState("");
+  const {data: todos, error, isError, isLoading, isSuccess} = useGetTodosQuery()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +28,13 @@ const TodoList = () => {
   );
 
   let content;
-  // Define conditional content
+  if (isLoading) {
+    content = "Loading..."
+  } else if (isSuccess) {
+    content = JSON.stringify(todos)
+  } else if (isError) {
+    content = <p>{error.error}</p>
+  }
 
   return (
     <main>
