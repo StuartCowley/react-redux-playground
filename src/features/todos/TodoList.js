@@ -1,5 +1,6 @@
 import { useGetTodosQuery } from "../../services/todos";
 import { useState } from "react";
+import "./todolist.css";
 
 const TodoList = () => {
   const [newTodo, setNewTodo] = useState("");
@@ -23,17 +24,31 @@ const TodoList = () => {
           placeholder="Enter new todo"
         />
       </div>
-      <button className="submit">Submit</button>
+      <button className="todolist__button todolist__button--submit">
+        Submit
+      </button>
     </form>
   );
 
   let content;
   if (isLoading) {
-    content = "Loading..."
+    content = "Loading...";
   } else if (isSuccess) {
-    content = JSON.stringify(todos)
+    content = todos.map((todo) => {
+      return (
+        <article key={todo.id}>
+          <div className="todo">
+            <input type="checkbox" checked={todo.completed} id={todo.id} />
+            <label htmlFor={todo.id}>{todo.title}</label>
+          </div>
+          <button className="todolist__button todolist__button--trash">
+            Delete
+          </button>
+        </article>
+      );
+    });
   } else if (isError) {
-    content = <p>{error.error}</p>
+    content = <p>{error.error}</p>;
   }
 
   return (
