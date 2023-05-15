@@ -1,4 +1,9 @@
-import { useGetTodosQuery, useAddTodoMutation } from "../../services/todos";
+import {
+  useGetTodosQuery,
+  useAddTodoMutation,
+  useUpdateTodoMutation,
+  useDeleteTodoMutation,
+} from "../../services/todos";
 import { useState } from "react";
 import "./todolist.css";
 
@@ -12,6 +17,8 @@ const TodoList = () => {
     isSuccess,
   } = useGetTodosQuery();
   const [addTodo] = useAddTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,10 +56,20 @@ const TodoList = () => {
       return (
         <article key={todo.id}>
           <div className="todo">
-            <input type="checkbox" checked={todo.completed} id={todo.id} />
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              id={todo.id}
+              onChange={() =>
+                updateTodo({ ...todo, completed: !todo.completed })
+              }
+            />
             <label htmlFor={todo.id}>{todo.title}</label>
           </div>
-          <button className="todolist__button todolist__button--trash">
+          <button
+            className="todolist__button todolist__button--trash"
+            onClick={() => deleteTodo({ id: todo.id })}
+          >
             Delete
           </button>
         </article>
