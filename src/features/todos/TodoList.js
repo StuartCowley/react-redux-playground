@@ -1,14 +1,25 @@
-import { useGetTodosQuery } from "../../services/todos";
+import { useGetTodosQuery, useAddTodoMutation } from "../../services/todos";
 import { useState } from "react";
 import "./todolist.css";
 
 const TodoList = () => {
   const [newTodo, setNewTodo] = useState("");
-  const {data: todos, error, isError, isLoading, isSuccess} = useGetTodosQuery()
+  const {
+    data: todos,
+    error,
+    isError,
+    isLoading,
+    isSuccess,
+  } = useGetTodosQuery();
+  const [addTodo] = useAddTodoMutation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //addTodo
+    addTodo({
+      userId: 1,
+      title: newTodo,
+      completed: false,
+    });
     setNewTodo("");
   };
 
